@@ -20,33 +20,58 @@ def greedy_minimum_moves(n):
 
     return total_moves
 
-#def can_pair(n):
-#    move = 1
-#    while n > move:
-#        n -= move
-#        move += 1
-#    return n == 1
-
-def can_pair2(n):
+def greedy_pair_coins(n):
+    lst = [1] *n
     move = 1
-    paired = 0
-    while move <= n / 2:
-        paired += 1
-        move += 1
-        if move == n // 2 and paired % 2 != 0:
-            return False
-    return True
+    total_moves = 0
+    for i in range (0,n-1):
+        if lst[i] ==2 or lst[i] == 0:
+            continue
+        next_move = i +move
+        altnext_move = i-move
+        flag = True
+        if flag == True:
+            j = i
+            while j != next_move:
+                if j > n-1:
+                    break
+                if lst[j] == 0:
+                    next_move +=1
+                elif lst[j] ==2:
+                    next_move-=1
+                j+=1
+
+            if next_move <=n-1 and lst[next_move] ==1:
+                lst[next_move] +=1
+                lst[i] = 0
+                total_moves +=move
+                move+=1
+            else:
+                flag = False
+            
+        elif flag == False: 
+            j = i
+            while j != altnext_move:
+                if j < 0:
+                    break
+                if lst[j] == 0:
+                    altnext_move -=1
+                elif lst[j] ==2:
+                    altnext_move+=1
+                j-=1
+
+            if altnext_move>=0 and lst[altnext_move] ==1:
+                lst[altnext_move] +=1
+                lst[i] = 0
+                total_moves +=move
+                move+=1
+        print(lst)        
 
 
 def main():
    
     MAX_VALUE = 100  
-    
-    for n in range(2, MAX_VALUE+1):
-        if can_pair2(n) == False:
-            print("For n =", n, ", minimum moves = No solution")
-        else:
-            print("For n =", n, ", minimum moves =", greedy_minimum_moves(n))
+    greedy_pair_coins(12)
 
         
     
