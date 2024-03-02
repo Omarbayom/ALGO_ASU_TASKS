@@ -50,6 +50,8 @@ def greedy_pair_coins(lstOfN):
         if n %2 == 0 and pairs == n//2:
             print(f"for n = {n} has a solution and with total moves = {total_moves}")
             print(lst)
+        else:
+            print(f"for n = {n} has no solution")
                 
 
 
