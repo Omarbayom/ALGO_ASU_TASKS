@@ -1,6 +1,6 @@
 def greedy_minimum_moves(n):
-    if n % 2 != 0 or (n // 2) % 2 == 0:
-        return "No solution"
+    if n % 2 != 0:
+        return "No solution2"
     
     pairs = n // 2
     total_moves = 0
@@ -20,17 +20,34 @@ def greedy_minimum_moves(n):
 
     return total_moves
 
+#def can_pair(n):
+#    move = 1
+#    while n > move:
+#        n -= move
+#        move += 1
+#    return n == 1
+
+def can_pair2(n):
+    move = 1
+    paired = 0
+    while move <= n / 2:
+        paired += 1
+        move += 1
+        if move == n // 2 and paired % 2 != 0:
+            return False
+    return True
+
+
 def main():
-    valid_n_values = []
-    
+   
     MAX_VALUE = 100  
     
     for n in range(2, MAX_VALUE+1):
-        if n % 2 == 0 and (n // 2) % 2 != 0:
-            valid_n_values.append(n)
-    
-    for n in valid_n_values:
-        moves = greedy_minimum_moves(n)
-        print("For n =", n, ", minimum moves =", moves)
+        if can_pair2(n) == False:
+            print("For n =", n, ", minimum moves = No solution")
+        else:
+            print("For n =", n, ", minimum moves =", greedy_minimum_moves(n))
 
+        
+    
 main()
