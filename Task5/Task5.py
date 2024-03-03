@@ -47,10 +47,10 @@ def greedy_pair_coins(lstOfN):
                     lst[i] = 0
                     total_moves +=move
                     move+=1
-            print(lst) #print each iteration of the lst
+            print(lst) 
         if n %2 == 0 and pairs == n//2:
             print(f"for n = {n} has a solution and with total moves = {total_moves}")
-            #print(lst)
+
         else:
             print(f"for n = {n} has no solution")
                 
@@ -59,8 +59,9 @@ def greedy_pair_coins(lstOfN):
 def main():
    
     lstOfNs = []
-    i = input("please enter even number of N's")
-    lstOfNs.append(i)
+    for i in range (5):
+        i = int(input("please enter even number of N's: "))
+        lstOfNs.append(i)
     greedy_pair_coins(lstOfNs)
 
         
