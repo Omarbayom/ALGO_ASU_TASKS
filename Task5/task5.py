@@ -1,67 +1,67 @@
-def greedy_pair_coins(lstOfN):
-    for n in lstOfN:
-        lst = [1] *n
-        move = 1
-        total_moves = 0
-        pairs = 0
-        for i in range (0,n-1):
-            if lst[i] ==2 or lst[i] == 0:
-                continue
-            next_move = i +move
-            altnext_move = i-move
-            flag = True
-            if flag == True:
-                j = i
-                while j != next_move:
-                    if j > n-1:
-                        break
-                    if lst[j] == 0:
-                        next_move +=1
-                    elif lst[j] ==2:
-                        next_move-=1
-                    j+=1
+def greedy_pair_coin(numCoins):
+    if numCoins % 4 == 0:
+        #  multiples of 4
+        rowOfCoins = [1]*numCoins
+        n=numCoins
+        for i in range(1,n//4,1):         #rightside
+            #1,2,.. n/4-1
+            paired = False
+            index_of_current_coin=numCoins-1    #to be paired
+            while(not paired):
+                while(rowOfCoins[index_of_current_coin]!=1):
+                    index_of_current_coin-=1
+                #now I have single coin
+                #let's see if we can pair it
+                numberCoinsToBeJumped=i
+                index_coin_we_are_jumping_to=index_of_current_coin-1
+                while(numberCoinsToBeJumped>0 and  index_coin_we_are_jumping_to>=0):
+                    # while I have to jump more coins ==> I deduct coins and jump them 
+                    numberCoinsToBeJumped-=rowOfCoins[ index_coin_we_are_jumping_to]
+                    index_coin_we_are_jumping_to-=1
+                if(numberCoinsToBeJumped==0):
+                    while(rowOfCoins[ index_coin_we_are_jumping_to]<1):
+                         index_coin_we_are_jumping_to-=1
+                    if(rowOfCoins[index_of_current_coin]==1):
+                        #we found exactly a coin to jump to
+                        paired=True
+                        rowOfCoins[index_of_current_coin]=2
+                        rowOfCoins[ index_coin_we_are_jumping_to]=0
+            print(rowOfCoins)       
+        for i in range(n//4,n//2+1,1):          #leftside
 
-                if next_move <=n-1 and lst[next_move] ==1:
-                    lst[next_move] +=1
-                    pairs+=1
-                    lst[i] = 0
-                    total_moves +=move
-                    move+=1
-                else:
-                    flag = False
-                
-            elif flag == False: 
-                j = i
-                while j != altnext_move:
-                    if j < 0:
-                        break
-                    if lst[j] == 0:
-                        altnext_move -=1
-                    elif lst[j] ==2:
-                        altnext_move+=1
-                    j-=1
-
-                if altnext_move>=0 and lst[altnext_move] ==1:
-                    lst[altnext_move] +=1
-                    pairs+=1
-                    lst[i] = 0
-                    total_moves +=move
-                    move+=1
-            print(lst) 
-        if n %2 == 0 and pairs == n//2:
-            print(f"for n = {n} has a solution and with total moves = {total_moves}")
-
-        else:
-            print(f"for n = {n} has no solution")
-                
+            paired = False
+            index_of_current_coin=0    #to be paired
+            while(not paired):
+                while(rowOfCoins[index_of_current_coin]!=1):
+                    index_of_current_coin+=1
+                #now I have single coin
+                #let's see if we can pair it
+                numberCoinsToBeJumped=i
+                index_coin_we_are_jumping_to=index_of_current_coin+1
+                while(numberCoinsToBeJumped>0 and index_coin_we_are_jumping_to<=numCoins-1):
+                    # while I have to jump more coins ==> I deduct coins and jump them 
+                    numberCoinsToBeJumped-=rowOfCoins[index_coin_we_are_jumping_to]
+                    index_coin_we_are_jumping_to+=1
+                if(numberCoinsToBeJumped==0):
+                    while(rowOfCoins[index_coin_we_are_jumping_to]<1):
+                        index_coin_we_are_jumping_to+=1
+                    if(rowOfCoins[index_coin_we_are_jumping_to]==1):
+                        #we found exactly a coin to jump to
+                        paired=True
+                        rowOfCoins[index_of_current_coin]=0
+                        rowOfCoins[index_coin_we_are_jumping_to]=2
+            print(rowOfCoins)
+        moves= n//2 
+        print(rowOfCoins)
+        print(f"moves:{moves} ")
+    else:
+        print(f"No solution for {numCoins} Coins")
 
 
 def main():
    
-    lstOfNs = []
-    for i in range (5):
-        i = int(input("please enter even number of N's: "))
-        lstOfNs.append(i)
-    greedy_pair_coins(lstOfNs)
+    i = int(input("please enter even number of N's: "))
+    greedy_pair_coin(i)
 
-main()
+if __name__ == "__main__":
+    main()
