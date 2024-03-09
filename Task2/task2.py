@@ -14,7 +14,7 @@ def get_unvisited_neighbors(board, x, y):
     return count
 
 def get_next_move(board, x, y):
-    min_neighbors = 9
+    min_neighbors = 8
     next_x, next_y = -1, -1
     for move in moves:
         dx, dy = move
@@ -37,35 +37,23 @@ def display_board(board, x, y):
 
 
 def knight_tour():
-    while True:
-        board = [[0 for _ in range(8)] for _ in range(8)]
-        while True:
-            x = int(input('Enter the beginning x coordinate: '))
-            if 0 <= x <= 7:
-                break
-            print('Please enter a number between 0 and 7')
+    for start_x in range(8):
+        for start_y in range(8):
+            print(f"Trying starting position ({start_x}, {start_y})...")
+            board = [[0 for _ in range(8)] for _ in range(8)]
+            x, y = start_x, start_y
+            board[y][x] = 1
+            wohx, wohy = x, y
+            
+            for i in range(2, 65):
+                x, y = get_next_move(board, x, y)
+                board[y][x] = i
+                if i == 64:
+                    if [wohx, wohy] not in [[x + dx, y + dy] for dx, dy in moves]:
+                        break
+                    else:
+                        print("Knight's tour completed!")
+                        display_board(board, x, y)
 
-        while True:
-            y = int(input('Enter the beginning y coordinate: '))
-            if 0 <= y <= 7:
-                break
-            print('Please enter a number between 0 and 7')
-        
-        board[y][x] = 1
-        wohx, wohy = x, y
-        for i in range(2, 65):
-            x, y = get_next_move(board, x, y)
-            board[y][x] = i
-            print(f"Iteration {i-1}:")
-            display_board(board, x, y)
-            print((x,y))
-            print()
-            if i == 64:
-                if [wohx, wohy] not in [[x + dx, y + dy] for dx, dy in moves]:
-                    print("Knight cannot return to the starting position. Restarting...")
-                    break
-                else:
-                    print("Knight's tour completed!")
-                    break
 
 knight_tour()
