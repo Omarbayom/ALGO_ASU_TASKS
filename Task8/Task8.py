@@ -18,5 +18,5 @@ boxes[fake_box_index] = (weight_of_real_metal - 1) * 50
 
 
 fake_box_number, fake_box_weight, fake_piece_weight = find_fake_box(boxes)
-print(f"The fake box is box number {fake_box_number}, with total weight {fake_box_weight} kg and piece weight {fake_piece_weight} kg")
+print(f"The fake box is box number {fake_box_number}, with total weight {fake_box_weight} kg and each piece weighs {fake_piece_weight} kg")
 print(f"The real piece weight is {weight_of_real_metal} kg")
