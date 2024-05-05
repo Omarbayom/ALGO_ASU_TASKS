@@ -1,12 +1,17 @@
-def min_moves(n):
-    memo = [0] * (n+1)
-    for i in range(n-1, -1, -1):
-        if (n-i) % 2 == 0:
-            memo[n-i] = 2 * memo[n-i-1]
-        else:
-            memo[n-i] = 2 * memo[n-i-1] + 1
-    return memo[n]
+def security_switches(n):
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    
+    M = []
+    for i in range(n + 1):
+        M.append(0)
+    M[1], M[2] = 1, 2
+    
+    for i in range(3, n + 1):
+        M[i] = M[i - 1] + 2 * M[i - 2] + 1
+    
+    return M[n]
 
-
-x = int(input("Enter the number of Swithces: "))
-print("Minimum number of moves required to turn off all switches: ", min_moves(x))
+print(security_switches(4))
